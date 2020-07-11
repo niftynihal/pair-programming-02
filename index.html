@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Comics</title>
+</head>
+<body>
+    <script type="text/javascript">
+        displayAll = async (latest) => {
+            console.log(latest)
+            let arr = []
+            for(let i=0; i<10; i++){
+               arr[i] = await fetch(`https://xkcd.now.sh/?comic= ${latest-i}`).then((res) => res.json())
+            //    console.log(arr[i])
+            }
+            return Promise.all(arr)
+        }
+
+        getComic = () => {
+            fetch("https://xkcd.now.sh/?comic=latest")
+            .then((res) => {
+                 return res.json()
+            })
+            .then((response) => {
+                displayAll(response.num)
+                .then((response) => console.log(response))
+            })
+        }
+
+        window.addEventListener("load", () => {
+            getComic()
+        })
+    </script>
+</body>
+</html>
